@@ -16,7 +16,7 @@ class Product(models.Model):
     product_title = models.CharField(max_length=200)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='products/')  # Assurez-vous d'avoir les paramètres de médias configurés
+    image = models.ImageField(blank=True, upload_to='images')  # Assurez-vous d'avoir les paramètres de médias configurés
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
