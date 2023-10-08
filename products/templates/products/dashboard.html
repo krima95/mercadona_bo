@@ -1,0 +1,57 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+
+    <h5> Bienvenue {{ user }} </h5>
+
+    <hr>
+
+    <a class="btn btn-outline-success btn-sm" href="{% url 'dashboard' %}">
+
+        Ajouter un produit
+
+    </a>
+
+    <hr>
+
+    <table class="table table-light table_hover">
+
+        <thead class="table-light">
+
+            <th scope="col"> Catéguories </th>
+            <th scope="col"> Produits </th>
+            <th scope="col"> Descriptions </th>
+            <th scope="col"> Prix TTC avant remise </th>
+            <th scope="col"> Prix TTC après remise </th>
+            <th scope="col"> Photos </th>
+
+            <th scope="col"> Aperçu </th>
+
+        </thead>
+
+    <tbody>
+
+        {% if products  %}
+
+            {% for p in products %}
+
+                <tr>
+                    <td> {{ p.category }}</td>
+                    <td> {{ p.product_title }}</td>
+                    <td> {{ p.description }}</td>
+                    <td> {{ p.price }}</td>
+                    <td> {{ p.price }}</td>
+                    <td> <img src = "/media/{{ p.image }}" width = "50" height = "50"> </td>
+                </tr>
+
+            {% endfor %}
+
+
+
+
+        {% endif %}
+    </tbody>
+
+    </table>
+
+{% endblock %}

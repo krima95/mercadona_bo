@@ -1,35 +1,48 @@
+from datetime import datetime
+
 from django.db import models
 
 
-# Modèle pour représenter une Catégorie
-
+# Modèle Catégorie
 class Category(models.Model):
-    category_title = models.CharField(max_length=100)
+    category_title = models.CharField(max_length=30, verbose_name="Catéguorie")
+
+    class Meta:
+        verbose_name = "Catéguorie"
+        verbose_name_plural = "Catéguories"
 
     def __str__(self):
         return self.category_title
 
 
-# Modèle pour représenter un Produit
-
+# Modèle Produit
 class Product(models.Model):
-    product_title = models.CharField(max_length=200)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(blank=True, upload_to='images')  # Assurez-vous d'avoir les paramètres de médias configurés
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    product_title = models.CharField(max_length=30, verbose_name="Nom du produit")
+    description = models.TextField(verbose_name="Description")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Prix")
+    image = models.ImageField(blank=True, upload_to='images',
+                              verbose_name="Photo")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Catéguorie")
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Produit"
+        verbose_name_plural = "Produits"
 
     def __str__(self):
         return self.product_title
 
 
-# Modèle pour représenter une Promotion
-
+# Modèle Promotion
 class Promotion(models.Model):
-    start_date = models.DateField()
-    end_date = models.DateField()
-    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    start_date = models.DateField(verbose_name="Date de début")
+    end_date = models.DateField(verbose_name="Date de fin")
+    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Pourcentage de la remise")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Nom du produit")
+
+    class Meta:
+        verbose_name = "Promotion"
+        verbose_name_plural = "Promotions"
 
     def __str__(self):
         return self.start_date, self.end_date, self.discount_percentage, self.product
