@@ -1,6 +1,6 @@
 from .models import Product
 from django.shortcuts import render, redirect
-from .forms import CreateUserForm, LoginForm
+from .forms import CreateUserForm, LoginForm, AddProductForm, UpdateProductForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
 from django.contrib import messages
@@ -72,82 +72,80 @@ def user_logout(request):
 @login_required(login_url='login')
 def dashboard(request):
 
-    records = Product.objects.all()
+    products = Product.objects.all()
 
-    context = {'records': records}
+    context = {'products': products}
 
     return render(request, 'products/dashboard.html', context=context)
 
 
-"""
-# - Create a record
-
+# Ajouter un produit
 @login_required(login_url='login')
-def create_record(request):
-    form = CreateRecordForm()
+def create_product(request):
+    form = AddProductForm()
 
     if request.method == "POST":
 
-        form = CreateRecordForm(request.POST)
+        form = AddProductForm(request.POST)
 
         if form.is_valid():
             form.save()
 
-            messages.success(request, "Your record was created!")
+            messages.success(request, "Le produit est ajouté avec succès")
 
             return redirect("dashboard")
 
     context = {'form': form}
 
-    return render(request, 'webapp/create-record.html', context=context)
+    return render(request, 'products/create-product.html', context=context)
 
 
-# - Update a record
-
+# Modifier un produit
 @login_required(login_url='my-login')
-def update_record(request, pk):
-    record = Record.objects.get(id=pk)
+def update_product(request, pk):
 
-    form = UpdateRecordForm(instance=record)
+    product = Product.objects.get(id=pk)
+
+    form = UpdateProductForm(instance=product)
 
     if request.method == 'POST':
 
-        form = UpdateRecordForm(request.POST, instance=record)
+        form = UpdateProductForm(request.POST, instance=product)
 
         if form.is_valid():
             form.save()
 
-            messages.success(request, "Your record was updated!")
+            messages.success(request, "Mise à jour du produit avec succès")
 
             return redirect("dashboard")
 
     context = {'form': form}
 
-    return render(request, 'webapp/update-record.html', context=context)
+    return render(request, 'products/update-product.html', context=context)
 
 
-# - Read / View a singular record
-
-@login_required(login_url='login')
-def singular_record(request, pk):
-    all_records = Record.objects.get(id=pk)
-
-    context = {'record': all_records}
-
-    return render(request, 'webapp/view-record.html', context=context)
-
-
-# - Delete a record
+# - Afficher un produit
 
 @login_required(login_url='login')
-def delete_record(request, pk):
-    record = Record.objects.get(id=pk)
+def product(request, pk):
 
-    record.delete()
+    all_products = Product.objects.get(id=pk)
 
-    messages.success(request, "Your record was deleted!")
+    context = {'product': all_products}
+
+    return render(request, 'products/templates/products/view-product.html', context=context)
+
+
+# - Supprimer un produit
+
+@login_required(login_url='login')
+def delete_product(request, pk):
+
+    product = Product.objects.get(id=pk)
+
+    product.delete()
+
+    messages.success(request, "Produit suppprimé avec succès")
 
     return redirect("dashboard")
 
-
-"""

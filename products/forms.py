@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.forms.widgets import PasswordInput, TextInput
 
 
-# register/create a user
+# créer un user
 class CreateUserForm(UserCreationForm):
     class Meta:
 
@@ -14,16 +14,51 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'password1', 'password2']
 
 
-# login a user
-
+# Connecté un user
 class LoginForm(AuthenticationForm):
 
     username = forms.CharField(widget=TextInput())
     password = forms.CharField(widget=PasswordInput())
 
 
+# afficher les produits
 class ProductForm(ModelForm):
     class Meta:
         model = Product
         fields = ('product_title', 'description', 'price', 'image', 'category')
+
+
+# Ajouter un produit
+class AddProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('product_title', 'description', 'price', 'image', 'category')
+
+
+# Mofifier un produit
+class UpdateProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('product_title', 'description', 'price', 'image', 'category')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

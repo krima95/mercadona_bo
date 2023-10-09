@@ -18,7 +18,7 @@ class Category(models.Model):
 # Modèle Produit
 class Product(models.Model):
     product_title = models.CharField(max_length=30, verbose_name="Nom du produit")
-    description = models.TextField(verbose_name="Description")
+    description = models.TextField(blank=True, verbose_name="Description")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Prix")
     image = models.ImageField(blank=True, upload_to='images',
                               verbose_name="Photo")
@@ -36,7 +36,7 @@ class Product(models.Model):
 # Modèle Promotion
 class Promotion(models.Model):
     start_date = models.DateField(verbose_name="Date de début")
-    end_date = models.DateField(verbose_name="Date de fin")
+    end_date = models.DateField(blank=True,verbose_name="Date de fin")
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Pourcentage de la remise")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Nom du produit")
 
